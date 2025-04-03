@@ -1,0 +1,31 @@
+6.⁠ ⁠Naïve Bayes Algorithm
+
+import pandas as pd
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+Load data
+data = pd.read_csv('data.csv')
+
+Naïve Bayes algorithm
+def naive_bayes(data):
+    # Create Naïve Bayes classifier
+    clf = GaussianNB()
+
+    # Train Naïve Bayes classifier
+    clf.fit(data.drop('target', axis=1), data['target'])
+
+    # Predict target variable
+    predictions = clf.predict(data.drop('target', axis=1))
+
+    # Evaluate model
+    accuracy = accuracy_score(data['target'], predictions)
+    confusion_mat = confusion_matrix(data['target'], predictions)
+
+    return accuracy, confusion_mat
+
+Run Naïve Bayes algorithm
+accuracy, confusion_mat = naive_bayes(data)
+print("Accuracy:", accuracy)
+print("Confusion Matrix:\n", confusion_mat)
+
