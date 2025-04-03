@@ -1,0 +1,21 @@
+⁠Linear Regression (LR) Algorithm
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+Load data
+data = pd.read_csv('data.csv')
+
+Linear Regression algorithm
+def linear_regression(data):
+    # Create Linear Regression model
+    model = LinearRegression()
+
+    # Train Linear Regression model
+    model.fit(data.drop('target', axis=1), data['target'])
+
+    return model
+
+Run Linear Regression algorithm
+model = linear_regression(data)
+print(model)
