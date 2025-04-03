@@ -1,0 +1,37 @@
+10.⁠ ⁠Expectation & Maximization Algorithm
+
+import numpy as np
+
+Define Gaussian mixture model
+def gaussian_mixture_model(data, means, covariances, weights):
+    # Calculate likelihood
+    likelihood = np.zeros((len(data), len(means)))
+    for i in range(len(means)):
+        likelihood[:, i] = np.exp(-0.5 * np.sum((data - means[i])**2 / covariances[i], axis=1)) / np.sqrt(np.linalg.det(covariances[i]))
+
+    # Calculate posterior
+    posterior = likelihood * weights
+
+    return posterior
+
+Expectation & Maximization algorithm
+def expectation_maximization(data, means, covariances, weights):
+    # Expectation step
+    posterior = gaussian_mixture_model(data, means, covariances, weights)
+
+    # Maximization step
+    means_new = np.zeros_like(means)
+    covariances_new = np.zeros_like(covariances)
+    weights_new = np.zeros_like(weights)
+    for i in range(len(means)):
+        means_new[i] = np.sum(posterior[:, i:i+1] * data, axis=0) / np.sum(posterior[:, i])
+        covariances_new[i] = np.dot((data - means_new[i]).T, (data - means_new[i]) * posterior[:, i:i+1]) / np.sum(posterior[:, i])
+        weights_new[i] = np.mean(posterior[:, i])
+
+    return means_new, covariances_new, weights_new
+
+Run Expectation & Maximization algorithm
+data = np.random.rand(100, 2)
+means = np.array([[0, 0], [1, 1]])
+covariances = np.array([[[1, 0], [0, 1]], [[1, 0], [0, 1]]])
+weights = np.array([0.5,
