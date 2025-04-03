@@ -1,0 +1,21 @@
+5.⁠ ⁠K-Nearest Neighbors (K-NN) Algorithm
+
+import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
+
+Load data
+data = pd.read_csv('data.csv')
+
+K-NN algorithm
+def knn(data):
+    # Create K-NN classifier
+    clf = KNeighborsClassifier(n_neighbors=5)
+
+    # Train K-NN classifier
+    clf.fit(data.drop('target', axis=1), data['target'])
+
+    return clf
+
+Run K-NN algorithm
+clf = knn(data)
+print(clf)
