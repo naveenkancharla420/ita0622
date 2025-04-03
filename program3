@@ -1,0 +1,21 @@
+3.⁠ ⁠ID3 Algorithm
+
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+
+Load data
+data = pd.read_csv('data.csv')
+
+ID3 algorithm
+def id3(data):
+    # Create decision tree classifier
+    clf = DecisionTreeClassifier()
+
+    # Train decision tree classifier
+    clf.fit(data.drop('target', axis=1), data['target'])
+
+    return clf
+
+Run ID3 algorithm
+clf = id3(data)
+print(clf)
