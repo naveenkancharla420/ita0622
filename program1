@@ -1,0 +1,28 @@
+Here are some Python programs for various machine learning algorithms and applications:
+
+1.⁠ ⁠FIND-S Algorithm
+
+import pandas as pd
+
+Load data
+data = pd.read_csv('data.csv')
+
+FIND-S algorithm
+def find_s(data):
+    # Initialize hypothesis
+    hypothesis = ['0'] * len(data.columns)
+
+    # Iterate over data
+    for index, row in data.iterrows():
+        # Check if row is positive
+        if row['target'] == 'yes':
+            # Update hypothesis
+            for i in range(len(hypothesis)):
+                if hypothesis[i] == '0':
+                    hypothesis[i] = row[i]
+                elif hypothesis[i] != row[i]:
+                    hypothesis[i] = '?'
+
+    return hypothesis
+
+        
