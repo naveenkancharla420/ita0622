@@ -1,0 +1,35 @@
+16.⁠ ⁠Compare different types Classification Algorithms and evaluate their performance
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
+
+Load data
+data = pd.read_csv('iris_data.csv')
+
+Split data into features and target
+X = data.drop('species', axis=1)
+y = data['species']
+
+Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+Create and train different classification models
+models = [
+    GaussianNB(),
+    LogisticRegression(),
+    DecisionTreeClassifier(),
+    RandomForestClassifier()
+]
+
+for model in models:
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    print("Model:", model.__class__.__name__)
+    print("Accuracy:", accuracy)
+    print("Classification Report:\n", 
