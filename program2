@@ -1,0 +1,37 @@
+ ⁠Candidate-Elimination Algorithm
+
+import pandas as pd
+
+Load data
+data = pd.read_csv('data.csv')
+
+Candidate-Elimination algorithm
+def candidate_elimination(data):
+    # Initialize hypothesis set
+    hypothesis_set = []
+
+    # Iterate over data
+    for index, row in data.iterrows():
+        # Check if row is positive
+        if row['target'] == 'yes':
+            # Update hypothesis set
+            new_hypothesis_set = []
+            for hypothesis in hypothesis_set:
+                if is_consistent(hypothesis, row):
+                    new_hypothesis_set.append(hypothesis)
+            hypothesis_set = new_hypothesis_set
+
+            # Add new hypothesis
+            new_hypothesis = []
+            for i in range(len(row)):
+                if row[i] == 'yes':
+                    new_hypothesis.append('yes')
+                else:
+                    new_hypothesis.append('?')
+            hypothesis_set.append(new_hypothesis)
+
+    return hypothesis_set
+
+def is_consistent(hypothesis, row):
+    for i in range(len(hypothesis)):
+        if hypothesis[i] != '?' and hypothesis[i] != row[i]:
