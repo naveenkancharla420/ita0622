@@ -1,0 +1,36 @@
+Comparison of Linear and Polynomial Regression
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression, Ridge
+from sklearn.preprocessing import PolynomialFeatures
+
+Load data
+data = pd.read_csv('data.csv')
+
+Linear Regression algorithm
+def linear_regression(data):
+    # Create Linear Regression model
+    model = LinearRegression()
+
+    # Train Linear Regression model
+    model.fit(data.drop('target', axis=1), data['target'])
+
+    return model
+
+Polynomial Regression algorithm
+def polynomial_regression(data):
+    # Create Polynomial Regression model
+    poly_features = PolynomialFeatures(degree=2)
+    poly_data = poly_features.fit_transform(data.drop('target', axis=1))
+    model = Ridge()
+
+    # Train Polynomial Regression model
+    model.fit(poly_data, data['target'])
+
+    return model
+
+Run Linear and Polynomial Regression algorithms
+linear_model = linear_regression(data)
+poly_model = polynomial_regression(data)
+print("Linear Model:", linear_model)
+print("Polynomial Model:", poly_model)
