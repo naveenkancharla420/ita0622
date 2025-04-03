@@ -1,0 +1,46 @@
+4.⁠ ⁠Backpropagation Algorithm
+
+import numpy as np
+
+Define neural network architecture
+n_inputs = 2
+n_hidden = 2
+n_outputs = 1
+
+Initialize weights and biases
+weights1 = np.random.rand(n_inputs, n_hidden)
+weights2 = np.random.rand(n_hidden, n_outputs)
+bias1 = np.zeros((1, n_hidden))
+bias2 = np.zeros((1, n_outputs))
+
+Define activation functions
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+def sigmoid_derivative(x):
+    return x * (1 - x)
+
+Backpropagation algorithm
+def backpropagation(inputs, targets):
+    # Forward pass
+    hidden_layer = sigmoid(np.dot(inputs, weights1) + bias1)
+    outputs = sigmoid(np.dot(hidden_layer, weights2) + bias2)
+
+    # Backward pass
+    output_error = targets - outputs
+    output_delta = output_error * sigmoid_derivative(outputs)
+
+    hidden_error = np.dot(output_delta, weights2.T)
+    hidden_delta = hidden_error * sigmoid_derivative(hidden_layer)
+
+    # Weight updates
+    weights1 += np.dot(inputs.T, hidden_delta)
+    weights2 += np.dot(hidden_layer.T, output_delta)
+    bias1 += np.sum(hidden_delta, axis=0, keepdims=True)
+    bias2 += np.sum(output_delta, axis=0, keepdims=True)
+
+Run backpropagation algorithm
+inputs = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+targets = np.array([[0], [1], [1], [0]])
+backpropagation(inputs, targets)
+
