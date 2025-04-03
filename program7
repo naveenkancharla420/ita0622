@@ -1,0 +1,21 @@
+7.⁠ ⁠Logistic Regression (LR) Algorithm
+
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+
+Load data
+data = pd.read_csv('data.csv')
+
+Logistic Regression algorithm
+def logistic_regression(data):
+    # Create Logistic Regression classifier
+    clf = LogisticRegression()
+
+    # Train Logistic Regression classifier
+    clf.fit(data.drop('target', axis=1), data['target'])
+
+    return clf
+
+Run Logistic Regression algorithm
+clf = logistic_regression(data)
+print(clf)
